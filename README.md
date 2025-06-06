@@ -41,3 +41,11 @@ La simulazione si svolge in due fasi:
    Il server attende di ricevere le porzioni dai client. Se riceve almeno `t` 
    segreti, ricostruisce la password. In caso contrario, la ricostruzine 
    fallisce.
+
+## Eseguire la simulazione
+Per eseguire la simulazione è disponibile un apposito script `run.sh`.
+Da terminale:
+```bash
+chmod +x run.sh
+./run.sh
+```
