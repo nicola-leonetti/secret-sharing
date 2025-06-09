@@ -4,7 +4,7 @@ import sys
 import random
 
 HOST = 'localhost'
-PORT = 65432
+PORT = 6000
 PRIME = 208351617316091241234326746312124448251235562226470491514186331217050270460481  # un primo grande
 
 class Server:
@@ -34,7 +34,13 @@ class Server:
         return [(i, self.eval_poly(coeffs, i)) for i in range(1, n + 1)]
 
     def lagrange_interpolate(self, x, x_s, y_s):
+        """
+        Given a list of x-values and y-values, calculate the value of 
+        the Lagrange polynomial at x by performing Lagrange 
+        interpolation.
+        """
         total = 0
+        # Build the i-th Lagrange term for each couple
         for i in range(len(x_s)):
             xi, yi = x_s[i], y_s[i]
             prod = yi
@@ -49,10 +55,14 @@ class Server:
         return total
 
     def handle_client(self, conn, addr, idx):
+        """
+        Handler for the idx-th client. The handler is run in parallel
+        for each connection with the server.
+        """
         conn.sendall(f"{self.shares[idx][0]},{self.shares[idx][1]}".encode())
         data = conn.recv(1024).decode()
         if data.startswith("SHARE:"):
-            x_str, y_str = data[6:].split(",")
+            x_str, y_str = data[len("SHARE:"):].split(",")
             with self.lock:
                 self.received.append((int(x_str), int(y_str)))
                 print(f"[+] Ricevuta share da {addr}")

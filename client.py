@@ -2,7 +2,7 @@ import socket
 import random
 
 HOST = 'localhost'
-PORT = 65432
+PORT = 6000
 
 def main():
     collaborate = random.choice([True, False])

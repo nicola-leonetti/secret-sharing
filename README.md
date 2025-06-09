@@ -43,7 +43,8 @@ La simulazione si svolge in due fasi:
    fallisce.
 
 ## Eseguire la simulazione
-Per eseguire la simulazione è disponibile un apposito script `run.sh`.
+Per eseguire la simulazione è disponibile un apposito script `run.sh`. 
+I parametri della simulazione possono essere cambiati all'inizio di tale file.
 Da terminale:
 ```bash
 chmod +x run.sh
