@@ -40,7 +40,10 @@ class Server:
         interpolation.
         """
         total = 0
-        # Build the i-th Lagrange term for each couple
+        # Build the i-th Lagrange term for each couple and sum each of 
+        # the terms mod PRIME
+        # The i-th term is given by the product of (x - xj)/(xi - xj) 
+        # for each j != i.
         for i in range(len(x_s)):
             xi, yi = x_s[i], y_s[i]
             prod = yi
@@ -57,9 +60,12 @@ class Server:
     def handle_client(self, conn, addr, idx):
         """
         Handler for the idx-th client. The handler is run in parallel
-        for each connection with the server.
+        for each connection to the server.
         """
+        # Send share to the client
         conn.sendall(f"{self.shares[idx][0]},{self.shares[idx][1]}".encode())
+
+        # Receive and parse data from the idx-th client
         data = conn.recv(1024).decode()
         if data.startswith("SHARE:"):
             x_str, y_str = data[len("SHARE:"):].split(",")
@@ -92,6 +98,7 @@ class Server:
 
         if len(self.received) >= self.t:
             x_s, y_s = zip(*self.received[:self.t])
+            # Interpolate coefficients to get the total secret.
             secret_int = self.lagrange_interpolate(0, x_s, y_s)
             try:
                 password = self.int_to_str(secret_int)
