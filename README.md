@@ -5,26 +5,31 @@ cui un segreto (ad esempio una password) viene condiviso tra `n` entità in modo
 che solo la collaborazione di almeno `t` entità consenta di ricostruire il 
 segreto originale.
 
+Il progetto è stato sviluppato nell'ambito dell'esame pratico del corso 
+Sicurezza dell'Informazione M del corso di laurea magistrale in Ingegneria 
+Informatica dell'Università di Bologna.
+
 ## Architettura
 
 Il sistema è composto da due componenti principali:
 
 - **Server (`server.py`)**
-  Si occupa di generare e distribuire i segreti ai client. 
+  Si occupa di generare a partire dalla password i segreti e di distribuirli 
+  ai client.
   Successivamente, cancella dalla propria memoria la password e tenta, 
   ricevendo dai client i segreti, la ricostruzione del segreto originario.
 
 - **Client (`client.py`)**  
-  Ogni client riceve una segreto dal server. Può decidere se partecipare alla 
+  Ogni client riceve un segreto dal server. Può decidere se partecipare alla 
   fase di ricostruzione del segreto inviando (oppure no) la propria porzione 
-  al server.
+  al server. La scelta avviene in modo casuale.
 
 ## Funzionamento
 
 La simulazione si svolge in due fasi:
 
-1. Il server viene lanciato specificando 
-    - `n` (numero totale di client) 
+1. Il server viene lanciato specificando
+    - `n` (numero totale di client)
     - `t` (numero minimo di segreti necessario per ricostruire il segreto)
     - una `password` da condividere
 

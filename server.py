@@ -3,9 +3,11 @@ import threading
 import sys
 import random
 
-HOST = 'localhost'
-PORT = 6000
-PRIME = 208351617316091241234326746312124448251235562226470491514186331217050270460481  # un primo grande
+import parameters
+
+HOST = parameters.SERVER_HOST
+PORT = parameters.SERVER_PORT
+PRIME = parameters.PRIME
 
 class Server:
     def __init__(self, n, t, password):
@@ -66,7 +68,7 @@ class Server:
         conn.sendall(f"{self.shares[idx][0]},{self.shares[idx][1]}".encode())
 
         # Receive and parse data from the idx-th client
-        data = conn.recv(1024).decode()
+        data = conn.recv(parameters.MAX_MSG_LENGTH).decode()
         if data.startswith("SHARE:"):
             x_str, y_str = data[len("SHARE:"):].split(",")
             with self.lock:

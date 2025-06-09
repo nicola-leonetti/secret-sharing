@@ -3,7 +3,7 @@
 ##### Simulation parameters
 N=5              
 T=2              
-PASSWORD="ciao123"
+PASSWORD="ciao123abc"
 #####
 
 # Start the server in background
