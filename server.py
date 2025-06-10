@@ -1,7 +1,7 @@
-import socket
-import threading
-import sys
 import random
+import socket
+import sys
+import threading
 
 import parameters
 
@@ -19,7 +19,10 @@ class Server:
         self.lock = threading.Lock()
 
     def str_to_int(self, s):
-        return int.from_bytes(s.encode(), 'big')
+        num = int.from_bytes(s.encode(), 'big')
+        if num > PRIME:
+            print("ATTENZIONE! intero troppo lungo")
+        return num 
 
     def int_to_str(self, n):
         return n.to_bytes((n.bit_length() + 7) // 8, 'big').decode()
